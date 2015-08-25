@@ -76,11 +76,11 @@ case class Image(path: Path, strokeColor: Color, fillColor: Color) {
 }
 
 object SimpleShapes {
-  def circle(radius: Double): Path = {
+  def circle(radius: Double, up: Double = 0, left: Double = 0): Path = {
     val c = 0.551915024494
     val cR = c * radius
-    val centerX = radius
-    val centerY = radius
+    val centerX = radius - left
+    val centerY = radius + up
     Path(Seq(
       MoveTo(centerX, centerY + radius),
       BezierCurveTo(centerX + cR, centerY + radius,
@@ -112,6 +112,9 @@ object SimpleShapes {
 }
 
 object MyDoodle extends App {
-  val sampleImage = Image(SimpleShapes.circle(100), Color.red, Color.black)
-  sampleImage.draw(Java2DCanvas.canvas)
+  val canvas = Java2DCanvas.canvas
+  val sampleImage = Image(SimpleShapes.circle(100, 50, 50), Color.red, Color.black)
+  sampleImage.draw(canvas)
+  val sampleImage2 = Image(SimpleShapes.rectangle(100, 200), Color.red, Color.black)
+  sampleImage2.draw(canvas)
 }
